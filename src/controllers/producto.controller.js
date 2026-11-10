@@ -13,7 +13,7 @@ const CAMPOS = 'id, marca, descripcion, precio, stock' //Dato común
 //Todas las funciones reciben y envian datos (pasarelas)
 //red (require - solicitar >>>), res (result - <<< resultado)
 //API REST => http://miaplicacion.com/api/productos/1
-const listasProductos= async(req, res) => {
+const listarProductos= async(req, res) => {
   //Se utiliza try - cacth porq existe una probabilidad de error
   try{
     //Deserealización (obtener el primer elemento del arrreglo)
