@@ -111,7 +111,7 @@ const eliminarProducto= async(req, res) => {
 //Todos los métodos deben ser EXPORTADOS (se utilizarán desde las app)
 //el que lo utilizará sera "routes"
 module.exports = {
-  listasProductos,
+  listarProductos,
   obtenerProducto,
   crearProducto,
   actualizarProducto,
