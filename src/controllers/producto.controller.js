@@ -3,10 +3,10 @@
 
 //PASO 1
 //const objeto = require('') //TODAS LAS FUNCIONES
-//const { otroObjeto} = require('') //SOLO ALGUNAS FUNCIONES
+const { otroObjeto} = require('') //SOLO ALGUNAS FUNCIONES
 
 const { pool } = require('../config/database')
-const CAMPOS = 'id, marca, descripcion, precio, stock' //Dato común
+//const CAMPOS = 'id, marca, descripcion, precio, stock' //Dato común
 
 //todas las funciones serán ASÍNCRONAS (tardaran un tiempo en ser resultas...)
 //milisegundos, segundos (1000 = 1seg)
