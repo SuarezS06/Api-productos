@@ -16,5 +16,5 @@ app.get('/', (req, res) =>{
 })
   
 //Habilitamos las rutas de todos los módulos (index.js)
-app.use('/app', routes)
+app.use('/api', routes)
 module.exports = app
