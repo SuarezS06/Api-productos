@@ -32,3 +32,38 @@ const listarProveedores = async(req, res) => {
 
 //---------------------------------------------------------
 //OBTENER PROVEEDORES
+const obtenerProveedor = async(req, res) => {
+    try{
+        const id = Number(req.params.id)
+        if (isNaN(id) || id <= 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'El ID no puede ser un numero negativo o cero'
+            })
+        }
+    
+
+
+const [registro] = await pool.execute('SELECT * FROM proveedores WHERE id = ?', [id])
+
+if (registro.length === 0){
+    return res.status(404).json({
+        ok: false,
+        message: 'No existe el proveedor'
+    })
+}
+
+res.status(200).json({
+    ok: true,
+    data: registro[0]
+})
+}catch(e){
+    console.error(e)
+    res.status(500).json({
+        ok: false,
+        message: 'Error interno en el servidor'
+    })
+}
+}
+//------------------------------------------------------------
+//CREAR PROVEEDOR
