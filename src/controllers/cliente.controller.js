@@ -13,6 +13,8 @@ const validarCampos = ({apellidos, nombres, telefono, direccion, email} = {}) =>
     return errores
 }
 
+//--------------------------------------------------------------
+//LISTAR CLIENTES
 const listarClientes = async(req, res) => {
     try{
         const [clientes] = await pool.query('SELECT * FROM clientes ORDER BY id')
@@ -30,4 +32,37 @@ const listarClientes = async(req, res) => {
         })
 
     }
+}
+//----------------------------------------------------------------
+// OBTENER CLIENTES
+const obtenerClientes = async(req, res) => {
+    try{
+      const id = Number(req.params.id)
+      if (isNaN(id) || id <= 0){
+        return res.status(400).json({
+          ok: false,
+          message: 'El ID no puede ser negativo o cero'
+        })
+      }
+ 
+      const [registro] = await pool.execute(`SELECT * FROM productos WHERE id = ?`, [id])
+      
+      if (registro.length === 0){
+        return res.status(404).json({
+          ok: false,
+          message: 'No existe el cliente'
+        })
+      }
+
+      res.status(200).json({
+        ok: true,
+        data: registro[0]
+      })
+    }catch(e){
+    console.error(e)
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno en el servidor'
+    })
+  }
 }
