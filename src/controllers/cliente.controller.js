@@ -1,4 +1,4 @@
-const { pool } = require('.../config/database')
+const { pool } = require('../config/database')
 
 const validarCampos = ({apellidos, nombres, telefono, direccion, email} = {}) => {
     const errores = []
