@@ -66,3 +66,67 @@ const obtenerClientes = async(req, res) => {
     })
   }
 }
+
+const crearCliente = async(req, res) => {
+    try{
+      const errores = validarCampos(req.body)
+
+      if (errores.length > 0){
+        return res.status(400).json({
+            ok: false,
+            message: 'Verifique los datos solicitados',
+            errores
+        })
+      }
+
+      //guardar datos
+      const {apellidos, nombres, telefono, direccion, email} = req.body
+      const consulta = 'INSERT INTO clientes (apellidos, nombres, telefono, direccion, email VALUES (?,?,?,?,?))'
+      const [registro] = await pool.execute(consulta, [apellidos, nombres, telefono, direccion, email])
+
+      res.status(201).json({
+        ok: true,
+        id: registro.insertId
+      })
+    }catch(e){
+    console.error(e)
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno en el servidor'
+    })
+  }
+}
+//------------------------------------------------------------
+//ACTUALIZAR CLIENTES
+const actualizarCliente = async(req, res) => {
+    try{
+      
+    }catch(e){
+    console.error(e)
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno en el servidor'
+    })
+  }
+}
+//------------------------------------------------------------------------
+//ELIMINAR CLIENTES
+const eliminarCliente = async(req, res) => {
+    try{
+      
+    }catch(e){
+    console.error(e)
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno en el servidor'
+    })
+  }
+}
+
+module.exports = {
+    listarClientes,
+    obtenerClientes,
+    crearCliente,
+    actualizarCliente,
+    eliminarCliente
+}
