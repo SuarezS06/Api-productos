@@ -101,19 +101,6 @@ const crearCliente = async(req, res) => {
 //ACTUALIZAR CLIENTES
 const actualizarCliente = async(req, res) => {
     try{
-      
-    }catch(e){
-    console.error(e)
-    res.status(500).json({
-      ok: false,
-      message: 'Error interno en el servidor'
-    })
-  }
-}
-//------------------------------------------------------------------------
-//ELIMINAR CLIENTES
-const eliminarCliente = async(req, res) => {
-    try{
         const id = Number(req.params.id)
         if (isNaN(id) || id <= 0){
             return res.status(400).json({
@@ -151,6 +138,20 @@ const eliminarCliente = async(req, res) => {
             ok: true,
             filasAfectadas: resultado,affectedRows
         })
+      
+    }catch(e){
+    console.error(e)
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno en el servidor'
+    })
+  }
+}
+//------------------------------------------------------------------------
+//ELIMINAR CLIENTES
+const eliminarCliente = async(req, res) => {
+    try{
+        
       
     }catch(e){
     console.error(e)
