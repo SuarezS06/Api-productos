@@ -66,7 +66,8 @@ const obtenerClientes = async(req, res) => {
     })
   }
 }
-
+//---------------------------------------------------------------------
+//CREAR CLIENTE
 const crearCliente = async(req, res) => {
     try{
       const errores = validarCampos(req.body)
@@ -113,6 +114,43 @@ const actualizarCliente = async(req, res) => {
 //ELIMINAR CLIENTES
 const eliminarCliente = async(req, res) => {
     try{
+        const id = Number(req.params.id)
+        if (isNaN(id) || id <= 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'El ID no puede ser negativo o cero'
+
+            })
+        }
+
+        //validamos
+        const errores = validarCampos(req.body)
+        if (errores.length > 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'Verifique los datos solicitados',
+                errores
+            })
+        }
+
+        //en caso de ni existir un id
+        const [existe] = await pool.execute('SELECT id FROM clientes WHERE id = ?', [id])
+        if (existe.length === 0){
+            return res.status(404).json({
+                ok: false,
+                message: 'El ID no existe'
+            })
+        }
+
+        //Actualizamos
+        const consulta = 'UPDATE clientes SET apellidos=?, nombres=?, telefono=?, direccion=?, email=?, update_at=NOW() WHERE id=?'
+        const {apellidos, nombres, telefono, direccion, email} = req.body
+        const[resultado] = await pool.execute(consulta, [apellidos, nombres, telefono, direccion, email, id])
+
+        res.status(200).json({
+            ok: true,
+            filasAfectadas: resultado,affectedRows
+        })
       
     }catch(e){
     console.error(e)
