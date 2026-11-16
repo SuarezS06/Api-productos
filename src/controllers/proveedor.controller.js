@@ -67,3 +67,35 @@ res.status(200).json({
 }
 //------------------------------------------------------------
 //CREAR PROVEEDOR
+const crearProveedor = async(req, res) => {
+    try{
+        const errores = validarCampos(req.body)
+
+        if (errores.length > 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'Verifique los datos solicitados',
+                errores
+            })
+        }
+    
+
+const {razonsocial, contacto, ruc, direccion} = req.body
+const consulta = 'INSERT INTO proveedores (razonsocial, contacto, ruc, direccion) VALUES (?,?,?,?)'
+const [registro] = await pool.execute(consulta, [razonsocial, contacto, ruc, direccion])
+
+res.status(201).json({
+    ok: true,
+    id: registro.insertId
+})
+}catch(e){
+    console.error(e)
+    res.status(500).json({
+        ok: false,
+        message: 'Error interno en el servidor'
+        })
+    }
+}
+
+//-----------------------------------------------------------------
+//PROVEEDOR ACTUALIZAR
