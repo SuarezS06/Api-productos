@@ -99,3 +99,88 @@ res.status(201).json({
 
 //-----------------------------------------------------------------
 //PROVEEDOR ACTUALIZAR
+const actualizarProveedor = async(req, res) => {
+    try{
+        const id = Number(req.params.id)
+        if (isNaN(id) || id <= 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'El ID no puede ser negativo o cero'
+            })
+        }
+        
+        const errores = validarCampos(req.body)
+        if (errores.length > 0){
+            return res.status(400).json({
+                ok: false,
+                message: 'Verifique los datos solicitados',
+                errores
+            })
+        }
+
+        const [existe] = await pool.execute('SELECT id FROM proveedores WHERE id = ?', [id])
+        if (existe.length === 0){
+            return res.status(404).json({
+                ok: false,
+                message: 'El id no existe'
+            })
+        }
+
+        const consulta = 'UPDATE proveedores SET razonsocial=?, contacto=?, ruc=?, direccion=?, update_at=NOW() WHERE id=?'
+        const {razonsocial, contacto, ruc, direccion} = req.body
+        const [resultado] = await pool.execute(consulta, [razonsocial, contacto, ruc, direccion, id])
+
+        res.status(200).json({
+            ok: true,
+            filasAfectadas: resultado.affectedRows
+        })
+
+}catch(e){
+    console.error(e)
+    res.status(500).json({
+        ok: false,
+        message: 'Error interno en el servidor'
+        })
+    }
+}
+//-----------------------------------------------------------------
+//ELIMINAR PROVEEDOR
+const eliminarProveedor = async(req, res) => {
+    try{
+        const id=Number(req.params.id)
+        if (isNaN(id) || id <= 0){
+        return res.status(400).json({
+            ok: false,
+            message: 'EL ID no puede ser negativo o cero'
+        })
+    }
+
+    const [resultado] = await pool.execute('DELETE FROM proveedores WHERE id = ?', [id])
+
+    if (resultado.affectedRows === 0){
+        return res.status(404).json({
+            ok: false,
+            message: 'EL ID no existe'
+        })
+    }
+    
+    res.status(200).json({
+        ok: true,
+        message: 'proveedor eliminado'
+    })
+}catch(e){
+    console.error(e)
+    res.status(500).json({
+        ok: false,
+        message: 'Error interno del servidor'
+        })
+    }
+}
+
+module.exports = {
+    listarProveedores,
+    obtenerProveedor,
+    crearProveedor,
+    actualizarProveedor,
+    eliminarProveedor
+}

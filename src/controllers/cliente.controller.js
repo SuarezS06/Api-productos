@@ -151,8 +151,27 @@ const actualizarCliente = async(req, res) => {
 //ELIMINAR CLIENTES
 const eliminarCliente = async(req, res) => {
     try{
+        const id = Number(req.params.id)
+        if (isNaN(id) || id <= 0) {
+            return res.status(400).json({
+                ok: false,
+                message: 'EL ID no puede ser un numero negativo o cero'
+            })
+        }
         
+        const [resultado] = await pool.execute('DELETE FROM clientes WHERE id = ?', [id])
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({
+                ok: false,
+                message: 'El id no existe'
+            })
+        }
       
+        res.status(200).json({
+            ok: true,
+            message: 'Cliente eliminado'
+        })
     }catch(e){
     console.error(e)
     res.status(500).json({
