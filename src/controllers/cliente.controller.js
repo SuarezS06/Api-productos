@@ -34,7 +34,7 @@ const listarClientes = async(req, res) => {
 }
 //----------------------------------------------------------------
 // OBTENER CLIENTES
-const obtenerClientes = async(req, res) => {
+const obtenerCliente = async(req, res) => {
     try{
       const id = Number(req.params.id)
       if (isNaN(id) || id <= 0){
@@ -81,7 +81,7 @@ const crearCliente = async(req, res) => {
 
       //guardar datos
       const {apellidos, nombres, telefono, direccion, email} = req.body
-      const consulta = 'INSERT INTO clientes (apellidos, nombres, telefono, direccion, email VALUES (?,?,?,?,?))'
+      const consulta = 'INSERT INTO clientes (apellidos, nombres, telefono, direccion, email) VALUES (?,?,?,?,?))'
       const [registro] = await pool.execute(consulta, [apellidos, nombres, telefono, direccion, email])
 
       res.status(201).json({
@@ -129,13 +129,13 @@ const actualizarCliente = async(req, res) => {
         }
 
         //Actualizamos
-        const consulta = 'UPDATE clientes SET apellidos=?, nombres=?, telefono=?, direccion=?, email=?, update_at=NOW() WHERE id=?'
+        const consulta = 'UPDATE clientes SET apellidos=?, nombres=?, telefono=?, direccion=?, email=?, updated_at=NOW() WHERE id=?'
         const {apellidos, nombres, telefono, direccion, email} = req.body
         const[resultado] = await pool.execute(consulta, [apellidos, nombres, telefono, direccion, email, id])
 
         res.status(200).json({
             ok: true,
-            filasAfectadas: resultado,affectedRows
+            filasAfectadas: resultado.affectedRows
         })
       
     }catch(e){
