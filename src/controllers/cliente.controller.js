@@ -12,7 +12,6 @@ const validarCampos = ({apellidos, nombres, telefono, direccion, email} = {}) =>
     //es posible tener mas de un error
     return errores
 }
-
 //--------------------------------------------------------------
 //LISTAR CLIENTES
 const listarClientes = async(req, res) => {
@@ -180,7 +179,6 @@ const eliminarCliente = async(req, res) => {
     })
   }
 }
-
 module.exports = {
     listarClientes,
     obtenerClientes,

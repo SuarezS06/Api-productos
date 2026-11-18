@@ -9,7 +9,6 @@ const validarCampos = ({razonsocial, contacto, ruc, direccion} = {}) => {
 
     return errores
 }
-
 //------------------------------------------------------------------------
 //LISTAR PROVEEDORES
 const listarProveedores = async(req, res) => {
@@ -29,7 +28,6 @@ const listarProveedores = async(req, res) => {
         
     }
 }
-
 //---------------------------------------------------------
 //OBTENER PROVEEDORES
 const obtenerProveedor = async(req, res) => {
@@ -96,7 +94,6 @@ res.status(201).json({
         })
     }
 }
-
 //-----------------------------------------------------------------
 //PROVEEDOR ACTUALIZAR
 const actualizarProveedor = async(req, res) => {
@@ -176,7 +173,6 @@ const eliminarProveedor = async(req, res) => {
         })
     }
 }
-
 module.exports = {
     listarProveedores,
     obtenerProveedor,
