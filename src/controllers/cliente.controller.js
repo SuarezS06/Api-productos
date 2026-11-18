@@ -181,7 +181,7 @@ const eliminarCliente = async(req, res) => {
 }
 module.exports = {
     listarClientes,
-    obtenerClientes,
+    obtenerCliente,
     crearCliente,
     actualizarCliente,
     eliminarCliente
