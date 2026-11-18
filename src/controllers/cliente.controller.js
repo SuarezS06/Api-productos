@@ -129,7 +129,7 @@ const actualizarCliente = async(req, res) => {
         }
 
         //Actualizamos
-        const consulta = 'UPDATE clientes SET apellidos=?, nombres=?, telefono=?, direccion=?, email=?, updated_at=NOW() WHERE id=?'
+        const consulta = 'UPDATE clientes SET apellidos=?, nombres=?, telefono=?, direccion=?, email=?, update_at=NOW() WHERE id=?'
         const {apellidos, nombres, telefono, direccion, email} = req.body
         const[resultado] = await pool.execute(consulta, [apellidos, nombres, telefono, direccion, email, id])
 
