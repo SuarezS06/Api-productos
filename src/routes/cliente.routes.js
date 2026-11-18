@@ -7,6 +7,6 @@ router.get('/', controller.listarClientes)
 router.get('/:id', controller.obtenerCliente)
 router.post('/', controller.crearCliente)
 router.put('/:id',controller.actualizarCliente)
-router.put('/:id', controller.eliminarCliente)
+router.delete('/:id', controller.eliminarCliente)
 
 module.exports = router
